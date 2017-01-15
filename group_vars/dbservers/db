@@ -1,0 +1,10 @@
+mysql_users:
+  - name: symfony
+    pass: ""
+    priv: "symfony.*:ALL"                     # optional, defaults to "*.*:ALL"
+#    priv: "*.*:ALL"                     # optional, defaults to "*.*:ALL"
+    host: "%"                           # optional, defaults to "localhost"
+mysql_databases:
+  - name: symfony
+    collation: "utf8_general_ci"        # optional, defaults to "utf8_general_ci"
+    encoding: "utf8"                    # optional, defaults to "utf8"

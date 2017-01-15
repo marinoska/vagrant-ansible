@@ -1,0 +1,19 @@
+- name: Install Ant
+  apt:
+    name: ant
+    state: present
+- name: Install JDK
+  apt:
+    name: openjdk-6-jdk
+    state: present
+- name: Install Git
+  apt:
+    name: git
+    state: present
+- name: Install composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+- name: Tweak bashrc
+  become_user: "{{ansible_user}}"
+  lineinfile: state=present 
+              dest=~/.bashrc 
+              line="cd /var/www"  

@@ -1,0 +1,46 @@
+#!/usr/bin/env ansible-playbook
+## vim:ft=ansible :
+
+---
+
+# All.
+php_timezone: "Asia/Taipei"
+php_upload_max_filesize: "20M"
+php_post_max_size: "20M"
+php_memory_limit: "1024M"
+
+# Debian & Ubuntu.
+debian_php7_apt_repo: "http://packages.dotdeb.org"
+debian_php7_apt_key: "https://www.dotdeb.org/dotdeb.gpg"
+ubuntu_php7_ppa_repo: "ppa:ondrej/php"
+
+apt_php_packages:
+  - php7.1
+  - php7.1-cgi
+  - php7.1-cli
+  - php7.1-common
+  - php7.1-curl
+  - php7.1-fpm
+  - php7.1-gd
+  - php7.1-intl
+  - php7.1-json
+  - php7.1-mysql
+  #- php7.1-pear
+
+# CentOS
+yum_php_packages:
+  - php71u-cli
+  - php71u-common
+  - php71u-fpm
+  - php71u-fpm-nginx
+  - php71u-json
+  - php71u-mysqlnd
+  - php71u-opcache
+  - php71u-pdo
+  #- php71u-mbstring
+  #- php71u-pear
+
+# need use 'www-data' on Debian8.
+php_owner: 'www-data'
+php_group: 'www-data'
+

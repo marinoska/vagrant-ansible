@@ -1,0 +1,19 @@
+- hosts: webservers
+  become: true  
+
+  vars:
+    timezone: Europe/Amsterdam
+    locale_lang: en_US.UTF-8
+    locale_all: en_US.UTF-8
+
+  tasks:
+  # - debug:
+  #     msg: "inventory_hostname {{ inventory_hostname }} ansible_host {{ansible_host}} inventory_hostname_short {{inventory_hostname_short}}"
+
+  roles:  
+  - chusiang.php7
+  - geerlingguy.nginx
+  - knopki.locale
+  - yatesr.timezone
+  - misc
+  # - reboot

@@ -1,0 +1,52 @@
+nginx_vhosts:
+  - listen: "80"
+    server_name: "{{inventory_hostname}} www.{{inventory_hostname}}"
+    root: "/var/www/web"
+    access_log: "/var/log/nginx/{{inventory_hostname_short}}-{{environment_type}}-access.log"
+    error_log: "/var/log/nginx/{{inventory_hostname_short}}-{{environment_type}}-error.log"
+    extra_parameters: |
+      # strip app.php/ prefix if it is present
+      rewrite ^/app\.php/?(.*)$ /$1 permanent;   
+      location / {
+          index app.php;
+          try_files $uri @rewriteapp;
+      }
+
+      location @rewriteapp {
+          rewrite ^(.*)$ /app.php/$1 last;
+      }
+
+      # pass the PHP scripts to FastCGI server from upstream phpfcgi
+      location ~ ^/(app|app_dev|config)\.php(/|$) {
+          fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+          fastcgi_split_path_info ^(.+\.php)(/.*)$;
+          include fastcgi_params;
+          fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_param  HTTPS off;
+      }
+#  - listen: "443"
+#    server_name: "{{inventory_hostname}} www.{{inventory_hostname}}"
+#    root: "/var/www/web"
+#    access_log: "/var/log/nginx/{{inventory_hostname_short}}-{{environment_type}}-ssl-access.log"
+#    error_log: "/var/log/nginx/{{inventory_hostname_short}}-{{environment_type}}-ssl-error.log"
+#    extra_parameters: |
+#      ssl on;
+#      ssl_certificate /etc/ssl/certs/symfony2.crt;
+#      ssl_certificate_key /etc/ssl/private/symfony2.key;    
+#      # strip app.php/ prefix if it is present
+#      rewrite ^/app\.php/?(.*)$ /$1 permanent;
+#      location / {
+#          index app.php;
+#          try_files $uri @rewriteapp;
+#      }
+#      location @rewriteapp {
+#          rewrite ^(.*)$ /app.php/$1 last;
+#      }
+#      # pass the PHP scripts to FastCGI server from upstream phpfcgi
+#      location ~ ^/(app|app_dev|config)\.php(/|$) {
+#          fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+#          fastcgi_split_path_info ^(.+\.php)(/.*)$;
+#          include fastcgi_params;
+#          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+#          fastcgi_param HTTPS on;
+#      }
