@@ -32,6 +32,7 @@ Features include:
 - add `192.168.33.10 vagrant.site` line in your local /etc/hosts
 - run in browser http://vagrant.site - should see your index.php result
 - to run ansible provision manually `ansible-playbook play.yml`
+- - check if symfony database exists: `mysql -u root` then `show databases;` you should see Symfony database in the list
 
 #### Configuration
 - to change a site name go [ansible-dir]into hosts-dev and replace vagrant.site with whatever you want
