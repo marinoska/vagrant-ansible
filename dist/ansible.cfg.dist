@@ -1,4 +1,5 @@
 [defaults]
-roles_path = ansible/roles
-inventory = ansible/hosts-dev
+roles_path = ../vagrant-ansible/roles
+inventory = ../vagrant-ansible/hosts-dev
+
 

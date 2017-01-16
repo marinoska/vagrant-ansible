@@ -1,2 +1,2 @@
-- include: ansible/webserver.yml
-- include: ansible/dbserver.yml
+- include: ../vagrant-ansible/webserver.yml
+- include: ../vagrant-ansible/dbserver.yml

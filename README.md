@@ -8,6 +8,9 @@ Features include:
 - MySQL
 - MongoDB
 - NGINX with basic configuration supposed for a Synfony 2/3 project
+- Ant
+- Composer
+- Git
 
 #### Requirements & Dependencies
 - Tested with Ansible 2.2, there is no guarantee it will work on lower version
@@ -16,7 +19,7 @@ Features include:
 #### Launch the machine
 - Download/clone this project somewhere on your local machine (I prefer to have it in the same level where my project lives, but you can put it exactly inside the folder with your project as well)
 - Copy files from /dist into a Symfony3 project folder, remove ".dist" postfix from this file's names
-- Change paths in ansible.cfg and play.yml to the actual ansible project path
+- Change paths in ansible.cfg and play.yml to the actual ansible project path, also fix the path in Vagrantfile for this parameter - ansible.inventory_path
 - Run `vagrant up` in the folder where Vagrant file is (the root of your project)
 - If UNREACHABLE error pops up you should delete an entry for the same IP address from known_hosts: `ssh-keygen -R 192.168.33.10`. Rerun `vagrant up`
 - Vagrantbox will run on 192.168.33.10 address
@@ -28,9 +31,10 @@ Features include:
 - check the /var/www/web/index.php exists
 - add `192.168.33.10 vagrant.site` line in your local /etc/hosts
 - run in browser http://vagrant.site - should see your index.php result
+- to run ansible provision manually `ansible-playbook play.yml`
 
 #### Configuration
-- to change a site name go into hosts-dev and replace vagrant.site with whatever you want
+- to change a site name go [ansible-dir]into hosts-dev and replace vagrant.site with whatever you want
 - to change an hginx config go into [ansible-dir]/group_vars/webservers/nginx_symfony config before installation
 - to change a MySQL initial parameters  for db/user creation  go into  [ansible-dir]/group_vars/dbservers/mysql config before installation
 - to change an IP (and other parameters) go into Vagrantfile before installation
