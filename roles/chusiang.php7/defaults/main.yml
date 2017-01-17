@@ -25,6 +25,7 @@ apt_php_packages:
   - php7.1-intl
   - php7.1-json
   - php7.1-mysql
+  - php7.1-xml
   #- php7.1-pear
 
 # CentOS
@@ -37,6 +38,7 @@ yum_php_packages:
   - php71u-mysqlnd
   - php71u-opcache
   - php71u-pdo
+  - php71u-xml
   #- php71u-mbstring
   #- php71u-pear
 
