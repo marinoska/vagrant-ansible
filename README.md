@@ -30,12 +30,12 @@ Features include:
 - this should work from project's folder: `ansible -m ping -i hosts-dev all`
 - ssh into vagrantbox: `vagrant ssh`
 - add `192.168.33.10 vagrant.site` line in your local /etc/hosts
-- run in browser http://vagrant.site - should see your app_dev.php result
+- run in browser http://website.dev.local and http://website.prod.local for dev and prod environment respectively  
 - to run ansible provision manually `ansible-playbook play.yml`
 - - check if symfony database exists: `mysql -u root` then `show databases;` you should see Symfony database in the list
 
 #### Configuration
-- to change a site name go [ansible-dir]into hosts-dev and replace vagrant.site with whatever you want
+- to change a site name go [ansible-dir]into hosts-dev and replace `website` with whatever you want
 - to change an hginx config go into [ansible-dir]/group_vars/webservers/nginx_symfony config before installation
 - to change a MySQL initial parameters  for db/user creation  go into  [ansible-dir]/group_vars/dbservers/mysql config before installation
 - to change an IP (and other parameters) go into Vagrantfile before installation

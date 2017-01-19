@@ -1,9 +1,34 @@
 nginx_vhosts:
   - listen: "80"
-    server_name: "{{inventory_hostname}} www.{{inventory_hostname}}"
+    server_name: "{{inventory_hostname}}.dev.{{environment_type}} www.{{inventory_hostname}}.dev.{{environment_type}}"
     root: "/var/www/web"
-    access_log: "/var/log/nginx/{{inventory_hostname_short}}-{{environment_type}}-access.log"
-    error_log: "/var/log/nginx/{{inventory_hostname_short}}-{{environment_type}}-error.log"
+    access_log: "/var/log/nginx/{{inventory_hostname_short}}-dev-access.log"
+    error_log: "/var/log/nginx/{{inventory_hostname_short}}-dev-error.log"
+    extra_parameters: |
+      # strip app_dev.php/ prefix if it is present
+      rewrite ^/app_dev\.php/?(.*)$ /$1 permanent;
+      location / {
+          index app_dev.php;
+          try_files $uri @rewriteapp;
+      }
+
+      location @rewriteapp {
+          rewrite ^(.*)$ /app_dev.php/$1 last;
+      }
+
+      # pass the PHP scripts to FastCGI server from upstream phpfcgi
+      location ~ ^/(app|app_dev|config)\.php(/|$) {
+          fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+          fastcgi_split_path_info ^(.+\.php)(/.*)$;
+          include fastcgi_params;
+          fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_param  HTTPS off;
+      }
+  - listen: "80"
+    server_name: "{{inventory_hostname}}.prod.{{environment_type}} www.{{inventory_hostname}}.prod.{{environment_type}}"
+    root: "/var/www/web"
+    access_log: "/var/log/nginx/{{inventory_hostname_short}}-prod-access.log"
+    error_log: "/var/log/nginx/{{inventory_hostname_short}}-prod-error.log"
     extra_parameters: |
       # strip app.php/ prefix if it is present
       rewrite ^/app\.php/?(.*)$ /$1 permanent;   
@@ -13,7 +38,7 @@ nginx_vhosts:
       }
 
       location @rewriteapp {
-          rewrite ^(.*)$ /app_dev.php/$1 last;
+          rewrite ^(.*)$ /app.php/$1 last;
       }
 
       # pass the PHP scripts to FastCGI server from upstream phpfcgi
