@@ -12,9 +12,8 @@
   #     msg: "inventory_hostname {{ inventory_hostname }} ansible_host {{ansible_host}} inventory_hostname_short {{inventory_hostname_short}}"
 
   roles:  
-  - chusiang.php7
-  - geerlingguy.nginx
-  - knopki.locale
-  - yatesr.timezone
+  - php7
+  - nginx
+  - locale
+  - timezone
   - misc
-  # - reboot

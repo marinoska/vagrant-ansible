@@ -2,5 +2,5 @@
   become: true  
 
   roles:
-  - Stouts.mongodb
-  - ANXS.mysql
+  - mongodb
+  - mysql
