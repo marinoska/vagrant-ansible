@@ -7,7 +7,7 @@ Features include:
 - PHP 7.1 (CLI, PHP-FPM)
 - MySQL
 - MongoDB
-- NGINX with basic configuration supposed for a Synfony 2/3 project
+- NGINX with basic configuration for a Synfony 2/3 project
 - Ant
 - Composer
 - Git
@@ -17,20 +17,20 @@ Features include:
 - Tested with Vagrant 1.9.1 + VirtualBox 5.1
 
 #### Launch the machine
-- Download/clone this project somewhere on your local machine (I prefer to have it in the same level where my project lives, but you can put it exactly inside the folder with your project as well)
+- Remove an entry for this IP address from known_hosts: `ssh-keygen -R 192.168.33.10` otherwise it might cause a host UNREACHABLE error
+- Download/clone this project somewhere on your local machine (I prefer to have it on the same level where my project is)
 - Copy files from /dist into a Symfony3 project folder, remove ".dist" postfix from this file's names
 - Change paths in ansible.cfg and play.yml to the actual ansible project path, also fix the path in Vagrantfile for this parameter - ansible.inventory_path
 - Run `vagrant up` in the folder where Vagrant file is (the root of your project)
-- If UNREACHABLE error pops up you should delete an entry for the same IP address from known_hosts: `ssh-keygen -R 192.168.33.10`. Rerun `vagrant up`
 - Vagrantbox will run on 192.168.33.10 address
+- Project's folder will be syncronized with /var/www in Vagrantbox
+- Site root directory will be /var/www/web - app.php and app_dev.php index files are expected in root  
 
 #### Try if everething works
 - this should work from project's folder: `ansible -m ping -i hosts-dev all`
-- create web folder in your project root with index.php file inside
 - ssh into vagrantbox: `vagrant ssh`
-- check the /var/www/web/index.php exists
 - add `192.168.33.10 vagrant.site` line in your local /etc/hosts
-- run in browser http://vagrant.site - should see your index.php result
+- run in browser http://vagrant.site - should see your app_dev.php result
 - to run ansible provision manually `ansible-playbook play.yml`
 - - check if symfony database exists: `mysql -u root` then `show databases;` you should see Symfony database in the list
 
