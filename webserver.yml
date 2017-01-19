@@ -5,6 +5,7 @@
     timezone: Europe/Amsterdam
     locale_lang: en_US.UTF-8
     locale_all: en_US.UTF-8
+    php_timezone: "Europe/Amsterdam"
 
   tasks:
   # - debug:
