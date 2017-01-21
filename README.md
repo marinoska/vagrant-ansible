@@ -4,7 +4,7 @@ Vagrant provision with Ansible + Ant target to install Symfony3 with mongodb doc
 
 Features include:
 - Ubuntu 14.04
-- Basic configuration
+- Basic server configuration
 - PHP 7.1 (CLI, PHP-FPM)
 - MySQL
 - MongoDB
@@ -12,37 +12,41 @@ Features include:
 - Ant
 - Composer
 - Git
-- Symfony3 Ant job with MongoDB-bundle-to-PHP7 adaptor 
+- Symfony3 install Ant project including MongoDB-bundle-to-PHP7 adaptor 
 
-cp -r ../vagrant-ansible/dist/* . && vagrant up && vagrant ssh
-ant composer-install-symfony
 #### Requirements & Dependencies
 - Tested with Ansible 2.2, there is no guarantee it will work on lower version
 - Tested with Vagrant 1.9.1 + VirtualBox 5.1
 
 #### Launch the machine
-- Remove an entry for this IP address from known_hosts: `ssh-keygen -R 192.168.33.10` otherwise it might cause a host UNREACHABLE error
-- Download/clone this project somewhere on your local machine (I prefer to have it on the same level where my project is)
-- Copy files from /dist into a Symfony3 project folder, remove ".dist" postfix from this file's names
-- Change paths in ansible.cfg and play.yml to the actual ansible project path, also fix the path in Vagrantfile for this parameter - ansible.inventory_path
-- Run `vagrant up` in the folder where Vagrant file is (the root of your project)
-- Vagrantbox will run on 192.168.33.10 address
-- Project's folder will be syncronized with /var/www in Vagrantbox
-- Site root directory will be /var/www/web - app.php and app_dev.php index files are expected in root  
+- Remove an entry of the following IP address from known_hosts: `ssh-keygen -R 192.168.33.10` otherwise it might cause a host UNREACHABLE error
+- Download/clone this project next to your PHP working project directory is - otherwise you'll have to change paths in ansible.cfg, play.yml and also in Vagrantfile 
+- run in your project dir
+```
+>> cp -r ../vagrant-ansible/dist/* . && vagrant up
+```
+- Vagrantbox runs on 192.168.33.10
+- Project's folder is syncronized with /var/www in Vagrantbox
+- Your Ansible configuration is stored in `ansible` folder in your project
+- to run ansible provision manually run `ansible-playbook ansible/play.yml` in your project dir or `vagrant provision`
+
+#### Install Synfony3 with mongodb support
+Ssh into Vagrantbox `vagrant ssh` and run in the Vagrantbox `ant composer-install-symfony`
+- add `192.168.33.10 website.dev.local` line in your local /etc/hosts
+- add `192.168.33.10 website.prod.local` line in your local /etc/hosts
+- website.dev.local and website.prod.local refer to app_dev.php and app.php of your symfony project respectively
+- `symfony` mysql scheme and `symfony` username are created (with empty password)
 
 #### Try if everething works
-- this should work from project's folder: `ansible -m ping -i hosts-dev all`
-- ssh into vagrantbox: `vagrant ssh`
-- add `192.168.33.10 vagrant.site` line in your local /etc/hosts
+- this should work from project's dir: `ansible -m ping -i ansible/hosts-dev all`
 - run in browser http://website.dev.local and http://website.prod.local for dev and prod environment respectively  
-- to run ansible provision manually `ansible-playbook play.yml`
-- - check if symfony database exists: `mysql -u root` then `show databases;` you should see Symfony database in the list
+- check if symfony database exists: `mysql -u root` then `show databases;` you should see `symfony` database in the list
 
 #### Configuration
-- to change a site name go [ansible-dir]into hosts-dev and replace `website` with whatever you want
-- to change an hginx config go into [ansible-dir]/group_vars/webservers/nginx_symfony config before installation
-- to change a MySQL initial parameters  for db/user creation  go into  [ansible-dir]/group_vars/dbservers/mysql config before installation
-- to change an IP (and other parameters) go into Vagrantfile before installation
+- to change a site name go in ansible/hosts-dev and replace `website` with whatever you want 
+- nginx config is located in ansible/group_vars/webservers/nginx_symfony 
+- MySQL config is in ansible/group_vars/dbservers/mysql
+- IP-address of vagrantbox's webserver is in Vagrantfile and ansible/hosts-dev
 
 #### Just reminds me how it works
 Ansible Variable Precendence
