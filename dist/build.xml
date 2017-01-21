@@ -1,0 +1,39 @@
+<project>
+	<property name="_symfony_project" value="framework-standard-edition"/>
+	<property name="_is_install_mongo" value="true" />
+
+    <target name="composer-install-symfony">
+        <exec executable="composer">
+            <arg value="create-project" />
+            <arg value="symfony/${_symfony_project}" />			
+        </exec>
+
+		<copy todir=".">
+            <!-- copy also hidden files - defaultexcludes option -->
+			<fileset dir="${_symfony_project}" defaultexcludes="no" />
+		</copy>
+
+		<delete dir="${_symfony_project}"/>
+
+		<antcall target="_composer_require_mongo">
+		</antcall>             		 
+    </target>
+
+    <target name="_composer_require_mongo" if="${_is_install_mongo}">
+        <exec executable="composer">
+            <arg value="require" />
+            <arg value="alcaeus/mongo-php-adapter" />			
+        </exec>
+
+        <exec executable="composer">
+            <arg value="require" />
+            <arg value="doctrine/mongodb-odm" />			
+        </exec>	      
+        
+        <exec executable="composer">
+            <arg value="require" />
+            <arg value="doctrine/mongodb-odm-bundle" />			
+        </exec>	
+    </target>
+
+</project>

@@ -61,11 +61,11 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision 'ansible' do |ansible|
-    ansible.playbook = 'play.yml'
+    ansible.playbook = 'ansible/play.yml'
     ansible.verbose = true
     ansible.limit = "all"
     ansible.host_key_checking = false
-    ansible.inventory_path = '../vagrant-ansible/hosts-dev'
+    ansible.inventory_path = 'ansible/hosts-dev'
   end
 
 

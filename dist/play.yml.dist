@@ -1,2 +1,0 @@
-- include: ../vagrant-ansible/webserver.yml
-- include: ../vagrant-ansible/dbserver.yml

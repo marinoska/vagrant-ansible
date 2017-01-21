@@ -1,6 +1,7 @@
 ## Vagrant-Ansible-PHP7.1
 
-Vagrant provision with Ansible supposed for Symfony 3 local development
+Vagrant provision with Ansible + Ant target to install Symfony3 with mongodb doctrine bundle support adapted to PHP7.1
+
 Features include:
 - Ubuntu 14.04
 - Basic configuration
@@ -11,7 +12,10 @@ Features include:
 - Ant
 - Composer
 - Git
+- Symfony3 Ant job with MongoDB-bundle-to-PHP7 adaptor 
 
+cp -r ../vagrant-ansible/dist/* . && vagrant up && vagrant ssh
+ant composer-install-symfony
 #### Requirements & Dependencies
 - Tested with Ansible 2.2, there is no guarantee it will work on lower version
 - Tested with Vagrant 1.9.1 + VirtualBox 5.1
