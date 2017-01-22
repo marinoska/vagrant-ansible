@@ -48,6 +48,16 @@ Ssh into Vagrantbox `vagrant ssh` and run in the Vagrantbox `ant composer-instal
 - MySQL config is in ansible/group_vars/dbservers/mysql
 - IP-address of vagrantbox's webserver is in Vagrantfile and ansible/hosts-dev
 
+#### To do list
+- provide xdebug.ini config with
+```
+xdebug.remote_enable=1
+xdebug.profiler_enable=1
+xdebug.remote_port=9000
+xdebug.remote_host=192.168.33.1
+xdebug.remote_autostart=0  
+```
+
 #### Just reminds me how it works
 Ansible Variable Precendence
 extra vars (-e in the command line) always win
