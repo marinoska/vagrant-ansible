@@ -5,35 +5,70 @@
     <target name="composer-install-symfony">
         <exec executable="composer">
             <arg value="create-project" />
-            <arg value="symfony/${_symfony_project}" />			
+            <arg value="symfony/${_symfony_project}" />
         </exec>
 
 		<copy todir=".">
-            <!-- copy also hidden files - defaultexcludes option -->
 			<fileset dir="${_symfony_project}" defaultexcludes="no" />
 		</copy>
 
-		<delete dir="${_symfony_project}"/>
+        <delete dir="${_symfony_project}"/>
 
-		<antcall target="_composer_require_mongo">
-		</antcall>             		 
+        <antcall target="_composer_require_mongo" />
+        <antcall target="create_var_dirs" />
     </target>
 
+    <!--
+        inner target
+    -->
     <target name="_composer_require_mongo" if="${_is_install_mongo}">
         <exec executable="composer">
             <arg value="require" />
-            <arg value="alcaeus/mongo-php-adapter" />			
+            <arg value="alcaeus/mongo-php-adapter" />
         </exec>
 
         <exec executable="composer">
             <arg value="require" />
-            <arg value="doctrine/mongodb-odm" />			
-        </exec>	      
-        
-        <exec executable="composer">
-            <arg value="require" />
-            <arg value="doctrine/mongodb-odm-bundle" />			
-        </exec>	
+            <arg value="doctrine/mongodb-odm" />
+            <arg value="doctrine/mongodb-odm-bundle" />
+        </exec>
     </target>
 
+    <!--
+        inner target
+    -->
+    <target name="_create_var_symlinks">
+        <exec executable="mkdir">
+            <arg value="-p" />
+            <arg value="${dir}" />
+        </exec>
+        <exec executable="ln">
+            <arg value="-sf" />
+            <arg value="${dir}" />
+            <arg value="var" />
+        </exec>
+    </target>
+
+    <!--
+        Use this target to purge symfony cache (var dir in general)
+    -->
+    <target name="create_var_dirs">
+        <exec executable="sudo">
+            <arg value="rm" />
+            <arg value="-rf" />
+            <arg value="/tmp/var" />
+        </exec>
+        <antcall target="create_var_symlinks">
+            <param name="dir" value="/tmp/var/cache"/>
+        </antcall>
+        <antcall target="create_var_symlinks">
+            <param name="dir" value="/tmp/var/logs"/>
+        </antcall>
+        <antcall target="create_var_symlinks">
+            <param name="dir" value="/tmp/var/sessions"/>
+        </antcall>
+        <antcall target="create_var_symlinks">
+            <param name="dir" value="/tmp/var/uploads"/>
+        </antcall>
+    </target>
 </project>
