@@ -15,7 +15,6 @@
         <delete dir="${_symfony_project}"/>
 
         <antcall target="_composer_require_mongo" />
-        <antcall target="create_var_dirs" />
     </target>
 
     <!--
@@ -42,33 +41,11 @@
             <arg value="-p" />
             <arg value="${dir}" />
         </exec>
+        <chmod file="${dir}" perm="ugo+rwx" />
         <exec executable="ln">
             <arg value="-sf" />
             <arg value="${dir}" />
             <arg value="var" />
         </exec>
-    </target>
-
-    <!--
-        Use this target to purge symfony cache (var dir in general)
-    -->
-    <target name="create_var_dirs">
-        <exec executable="sudo">
-            <arg value="rm" />
-            <arg value="-rf" />
-            <arg value="/tmp/var" />
-        </exec>
-        <antcall target="create_var_symlinks">
-            <param name="dir" value="/tmp/var/cache"/>
-        </antcall>
-        <antcall target="create_var_symlinks">
-            <param name="dir" value="/tmp/var/logs"/>
-        </antcall>
-        <antcall target="create_var_symlinks">
-            <param name="dir" value="/tmp/var/sessions"/>
-        </antcall>
-        <antcall target="create_var_symlinks">
-            <param name="dir" value="/tmp/var/uploads"/>
-        </antcall>
     </target>
 </project>
