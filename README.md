@@ -12,6 +12,7 @@ Features include:
 - Ant
 - Composer
 - Git
+- Sendmail
 - Symfony3 install Ant project including MongoDB-bundle-to-PHP7 adaptor 
 
 #### Requirements & Dependencies

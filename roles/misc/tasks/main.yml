@@ -14,6 +14,11 @@
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 - name: Tweak bashrc
   become_user: "{{ansible_user}}"
-  lineinfile: state=present 
-              dest=~/.bashrc 
-              line="cd /var/www"  
+  lineinfile: state=present
+              dest=~/.bashrc
+              line="cd /var/www"
+- name: Install Sendmail
+  apt:
+    name: sendmail
+    state: present
+
