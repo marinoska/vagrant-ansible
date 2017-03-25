@@ -21,7 +21,7 @@ Features include:
 
 #### Launch the machine
 - Remove an entry of the following IP address from known_hosts: `ssh-keygen -R 192.168.33.10` otherwise it might cause a host UNREACHABLE error
-- Download/clone this project next to your PHP working project directory is - otherwise you'll have to change paths in ansible.cfg, play.yml and also in Vagrantfile 
+- Download/clone this project next to your Symfony working project directory is - otherwise you'll have to change paths in ansible.cfg, play.yml and also in Vagrantfile 
 - run in your project dir
 ```
 >> cp -r ../vagrant-ansible/dist/* . && vagrant up
