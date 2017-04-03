@@ -29,6 +29,7 @@ apt_php_packages:
   - php7.1-mongodb
   - php7.1-xdebug
   - php7.1-zip
+  - php7.1-mbstring
   #- php7.1-pear
 
 # CentOS
@@ -45,7 +46,7 @@ yum_php_packages:
   - php71u-mongodb
   - php71u-xdebug
   - php71u-zip
-  #- php71u-mbstring
+  - php71u-mbstring
   #- php71u-pear
 
 # need use 'www-data' on Debian8.
