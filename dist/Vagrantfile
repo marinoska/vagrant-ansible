@@ -42,9 +42,7 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder ".", "/var/www", group: "www-data", mount_options: ["dmode=776,fmode=664"]
-  config.vm.synced_folder "./bin", "/var/www/bin", group: "www-data", mount_options: ["dmode=776,fmode=774"]
-  config.vm.synced_folder "./var", "/var/www/var", group: "www-data", mount_options: ["dmode=777,fmode=774"]
+  config.vm.synced_folder ".", "/var/www", type: "nfs"
 
 
   # Provider-specific configuration so you can fine-tune various
