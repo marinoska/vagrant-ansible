@@ -32,7 +32,7 @@ Features include:
 - to run ansible provision manually run `ansible-playbook ansible/play.yml` in your project dir or `vagrant provision`
 
 #### Install Synfony3 with mongodb support
-Ssh into Vagrantbox `vagrant ssh` and run in the Vagrantbox `ant composer-install-symfony`
+Ssh into Vagrantbox `vagrant ssh` and run in the Vagrantbox `ant -f build-symfony.xml composer-install-symfony`
 - add `192.168.33.10 website.dev.local` line in your local /etc/hosts
 - add `192.168.33.10 website.prod.local` line in your local /etc/hosts
 - website.dev.local and website.prod.local refer to app_dev.php and app.php of your symfony project respectively
