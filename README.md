@@ -63,7 +63,8 @@ xdebug.remote_autostart=0
 # Listen to local interface only. Comment out to listen on all interfaces.
 # bind_ip = 127.0.0.1
 ```
-
+Create sessions dir:  mkdir -p /var/sessions
+&& chown www-data:vagrant /var/sessions
 #### Just reminds me how it works
 Ansible Variable Precendence
 extra vars (-e in the command line) always win
