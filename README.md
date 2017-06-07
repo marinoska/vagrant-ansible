@@ -65,6 +65,8 @@ xdebug.remote_autostart=0
 ```
 Create sessions dir:  mkdir -p /var/sessions
 && chown www-data:vagrant /var/sessions
+```
+
 #### Just reminds me how it works
 Ansible Variable Precendence
 extra vars (-e in the command line) always win
