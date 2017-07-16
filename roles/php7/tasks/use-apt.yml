@@ -21,11 +21,11 @@
   become: true
   apt_key: url={{ debian_php7_apt_key }} state=present
   when: ansible_distribution|lower == "debian"
-
-- name: Add third-party repository for Ubuntu
-  become: true
-  apt_repository: repo={{ ubuntu_php7_ppa_repo }}
-  when: ansible_distribution|lower == "ubuntu"
+#
+#- name: Add third-party repository for Ubuntu
+#  become: true
+#  apt_repository: repo={{ ubuntu_php7_ppa_repo }}
+#  when: ansible_distribution|lower == "ubuntu"
 
 # Update apt cache.
 - name: Update apt cache

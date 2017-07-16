@@ -1,5 +1,5 @@
 - hosts: webservers
-  become: true  
+  become: true
 
   vars:
     timezone: Europe/Amsterdam
@@ -11,9 +11,25 @@
   # - debug:
   #     msg: "inventory_hostname {{ inventory_hostname }} ansible_host {{ansible_host}} inventory_hostname_short {{inventory_hostname_short}}"
 
-  roles:  
+  roles:
   - php7
   - nginx
   - locale
   - timezone
   - misc
+  - selenium
+
+  tasks:
+    - name: Tweak hosts
+      become: true
+      lineinfile: state=present
+                  dest=/etc/hosts
+                  line="127.0.0.1 {{inventory_hostname}}.dev.local"
+                  line="127.0.0.1 {{inventory_hostname}}.prod.local"
+    - name: Tweak bashrc
+      become_user: "{{ansible_user}}"
+      lineinfile: state=present
+                  dest=~/.bashrc
+                  line="cd /var/www"
+
+

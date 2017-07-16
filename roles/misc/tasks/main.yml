@@ -1,3 +1,58 @@
+- name: Install unzip
+  apt:
+    name: unzip
+    update_cache: yes
+    state: present
+- name: Import keys using apt-key (webupd8team)
+  shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+- name: Setup repositories
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+    - deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main
+- name: Mark Oracle license as accepted & seen
+  shell: echo debconf {{ item }} | debconf-set-selections
+  with_items:
+    - shared/accepted-oracle-license-v1-1 select true
+    - shared/accepted-oracle-license-v1-1 seen true
+- name: Install Java 8 package
+  apt: name=oracle-java8-installer state=installed
+- name: Install default packages
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - curl
+    - wget
+    - ntp
+    - openssl
+    - vim
+    - freebsd-buildutils
+    - tcpdump
+    - nmap
+    - screen
+    - bsd-mailx
+    - apt-file
+    - sudo
+    - ant
+    - git
+    - subversion
+    - htop
+    - iftop
+    - iotop
+    - mtr
+    - sshguard
+    - sysstat
+    - strace
+    - ncdu
+    - tree
+    - python-dnspython
+    - ack-grep
+    - jq
+- name: Update Debian Alternatives for Java
+  shell: '/usr/sbin/update-java-alternatives -s java-8-oracle'
 - name: Install Ant
   apt:
     name: ant
@@ -5,20 +60,16 @@
 - name: Install JDK
   apt:
     name: openjdk-6-jdk
-    state: present
+    state: absent
 - name: Install Git
   apt:
     name: git
     state: present
 - name: Install composer
   shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-- name: Tweak bashrc
-  become_user: "{{ansible_user}}"
-  lineinfile: state=present
-              dest=~/.bashrc
-              line="cd /var/www"
 - name: Install Sendmail
   apt:
     name: sendmail
     state: present
+
 

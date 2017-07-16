@@ -1,0 +1,58 @@
+---
+- name: Google linux signing key for chrome
+  apt_key:
+    url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+    state: present
+- name: Add the repository for installing chrome
+  apt_repository:
+    repo: deb http://dl.google.com/linux/chrome/deb/ stable main
+    state: present
+- name: Create directory for selenium
+  file:
+    state: directory
+    path: "{{ selenium_dir }}"
+- name: Install chromedriver
+  unarchive:
+    src: https://chromedriver.storage.googleapis.com/{{ chromedriver_version }}/chromedriver_linux64.zip
+    dest: "{{ selenium_dir }}"
+    remote_src: true
+- name: Install geckodriver
+  unarchive:
+    src: https://github.com/mozilla/geckodriver/releases/download/v{{ geckodriver_version }}/geckodriver-v{{ geckodriver_version }}-linux64.tar.gz
+    dest: "{{ selenium_dir }}"
+    remote_src: true
+- name: Setup firefox repositories
+  apt_repository:
+    repo: "ppa:jonathonf/firefox-esr"
+    state: present
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    force: yes
+  with_items:
+    - firefox-esr
+    - libasound2
+    - libdbus-glib-1-2
+    - xvfb
+    - google-chrome-stable
+- name: Download Selenium
+  get_url:
+    url: http://selenium-release.storage.googleapis.com/{{ selenium_main_version }}/selenium-server-standalone-{{ selenium_minor_version }}.jar
+    dest: "{{ selenium_dir }}/selenium-server-standalone.jar"
+#- name: Create Selenium Server start wrapper
+#  template:
+#    src: jenkins-selenium.tpl
+#    dest: /usr/local/bin/jenkins-selenium
+#    mode: 'u=rwx,g=rx,o=rx'
+#- name: Create Selenium Server service configuration
+#  template:
+#    src: jenkins-selenium-service.tpl
+#    dest: /etc/systemd/system/selenium-jenkins.service
+#- name: Reload systemd daemon
+#  shell: 'systemctl daemon-reload'
+#- name: Start & enable selenium-jenkins service
+#  service:
+#    name: selenium-jenkins
+#    state: restarted
+#    enabled: true
