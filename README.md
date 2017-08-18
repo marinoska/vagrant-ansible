@@ -49,24 +49,6 @@ Ssh into Vagrantbox `vagrant ssh` and run in the Vagrantbox `ant -f build-symfon
 - MySQL config is in ansible/group_vars/dbservers/mysql
 - IP-address of vagrantbox's webserver is in Vagrantfile and ansible/hosts-dev
 
-#### To do list
-- provide xdebug.ini config with
-```
-xdebug.remote_enable=1
-xdebug.profiler_enable=1
-xdebug.remote_port=9000
-xdebug.remote_host=192.168.33.1
-xdebug.remote_autostart=0  
-```
-- inside the box, comment out the bind_ip line from /etc/mongod.conf.
-```
-# Listen to local interface only. Comment out to listen on all interfaces.
-# bind_ip = 127.0.0.1
-```
-Create sessions dir:  mkdir -p /var/sessions
-&& chown www-data:vagrant /var/sessions
-```
-
 #### Just reminds me how it works
 Ansible Variable Precendence
 extra vars (-e in the command line) always win
